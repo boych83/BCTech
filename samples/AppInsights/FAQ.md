@@ -30,6 +30,8 @@ _We have been using telemetry for some months now and have enabled 20+ apps as w
 To reduce ingestion cost, you can
 * set limits on daily data ingestion
 * reduce data ingestion by sampling to only ingest a percentage of the inbound data (see https://docs.microsoft.com/en-us/azure/azure-monitor/app/sampling#ingestion-sampling)
+* set a daily limit of how much data that can be ingested
+* purge data from your Application Insights resource (see _How do I delete data from Application Insights?_ below)
 * set alerts on cost thresholds being exceeded to get notified if this happens
 
 Use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyIngestion.kql) to see the data distribution of different event ids in your telemetry database.
@@ -37,7 +39,7 @@ Use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyInges
 See all helper queries here: [HelperQueries](KQL/Queries/HelperQueries/)
 
 ## Should each customer/app have their own Application Insights resource, rather than one insight for multiple customers?
-Partitioning of Application Insights resources across multiple customers or apps depends on what you use telemetry for. The benefit of having a 1-1 relationship between customers/apps and Application Insights resources is that you can also use the Usage features in the Application Insights portal to monitor how a particular customer is using BC. It will also make it cheaper for you because the free limits per Application Insights is bound to each customer/app and in case the customer/app goes beyond the free limit, it is easy to separate the cost of telemetry per customer/app. Downside of a 1-1 relationship between customers/apps and Application Insights resources is that you have more Azure resources to manage, including any cross-customer alerting/monitoring that you might want to setup.
+Partitioning of Application Insights resources across multiple customers or apps depends on what you use telemetry for. The benefit of having a 1-1 relationship between customers/apps and Application Insights resources is that you can also use the Usage features in the Application Insights portal to monitor how a particular customer is using BC. It also makes it easy to separate the cost of telemetry per customer/app. Downside of a 1-1 relationship between customers/apps and Application Insights resources is that you have more Azure resources to manage, including any cross-customer alerting/monitoring that you might want to setup.
 
 Also, it is recommended to use per-environment telemetry from per-app telemetry into separate Application Insights resources.
 
@@ -62,6 +64,8 @@ See <https://docs.microsoft.com/en-us/azure/azure-monitor/app/pricing#change-the
 Purge data in an Application Insights component by a set of user-defined filters.
 
 See <https://docs.microsoft.com/en-us/rest/api/application-insights/components/purge#examples> 
+
+You can use Powershell to setup a purge process, see an example here: [How do I use Powershell to delete telemetry data?](Powershell/README.md)
 
 ## Can I grant read-only access to Application Insights?
 To grant a person read-only access to Application Insights, go to the Access control (IAM) page in the Application Insights portal, and then add the role assignment "Reader" to the person. 
