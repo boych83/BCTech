@@ -15,6 +15,39 @@ Currently, the following things will not work in an Excel _layout_
 
 Note that you can use all of these features on the report once it has been generated. 
 
+## I added new fields to the report dataset. Why are they not showing up in my layout file?
+Excel layouts support that the layoter can remove columns from the Data table in the Data worksheet. This is why new columns added to the dataset do not appear in the layout automagically. The way to fix this is not to scratch your precious layout file, but simply to edit the header in Data table in the Data worksheet and add the new field metadata here. 
+
+## I just want the report data in Excel. Any tips?
+Tip: Just use request page, Schedule, Excel Document (Data only)
+
+Quick tip: do it with an Excel layout if you want to remove columns you don’t need from the Data worksheet (Yes, you can do that)
+
+Advanced tip: Consider doing some data manipulation in Power Query. Just the things you always do
+
+## I want to to create a layout from scratch, but I don’t know what might be useful to show. Any tips?
+Try using Analyze Data and just add the insights to the layout.
+
+![Using Analyze Data](images/using-analyze-data.png)
+
+
+## I want to manipulate data and show it in a worksheet. Any tips?
+Tip: learn about table formulas in Excel
+
+Advanced tip: Do it in Power Query
+
+## I want to use nice headings in the pivot tables
+Just rename fields in the Pivot table
+
+Do not rename fields in the Data worksheet (remember the contract)
+
+## I want to use the report as a data source. Any tips?
+Every night update an Excel workbook stored in a ‘public’ place (e.g. Onedrive).
+
+Using Power Query, other Excel workbooks (or Power BI) use the report as data source. 
+
+You effectively have your report dataset exposed to Power BI
+
 
 
 # Disclaimer
