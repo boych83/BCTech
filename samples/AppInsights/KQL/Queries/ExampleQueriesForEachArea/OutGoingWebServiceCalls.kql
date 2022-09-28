@@ -7,6 +7,9 @@
 traces
 | where timestamp > ago(60d) // change if your retention policy is different than the default
     and customDimensions.eventId == 'RT0019'
+| extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
+| extend httpHeadersJSON = parse_json(httpHeadersTmp)
+| extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
 | project eventId = customDimensions.eventId 
 , aadID = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
@@ -29,8 +32,6 @@ traces
 , executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan
 // these three lines httpHeadersTmp, httpHeadersJSON, and msUserAgent 
 // illustrate how to extract data from the httpHeaders dimension
-| extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
-| extend httpHeadersJSON = parse_json(httpHeadersTmp)
-| extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
+
 
 

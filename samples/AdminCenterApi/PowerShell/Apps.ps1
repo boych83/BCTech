@@ -2,7 +2,8 @@
 
 
 # Shared Parameters
-$environmentName = "MyProd"
+$environmentName = "Production"
+$environmentName = "Preview"
 #$accessToken = "" # get this from the Authenticate sample
 
 
@@ -22,9 +23,14 @@ $response= Invoke-WebRequest `
 Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
 
+
+
+
+
 # Update one of the apps
 $appIdToUpdate = "334ef79e-547e-4631-8ba1-7a7f18e14de6"
 $appTargetVersion = "16.0.11240.12188"
+
 $response= Invoke-WebRequest `
     -Method Post `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/apps/$appIdToUpdate/update" `
@@ -108,3 +114,7 @@ catch [System.Net.WebException]
     Write-Error $Exception.Message
     Write-Error $respBody -ErrorAction Stop
 } 
+
+
+
+########################  

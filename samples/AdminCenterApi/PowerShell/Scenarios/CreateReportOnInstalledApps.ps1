@@ -9,7 +9,7 @@
 #  - BC Admin Center API: get an environment's available app updates
 
 Install-Module PartnerCenter  # only needs to be done once, see documentation at https://docs.microsoft.com/powershell/module/partnercenter
-
+Import-Module PartnerCenter
 # PREPARATION
 Connect-PartnerCenter
 
