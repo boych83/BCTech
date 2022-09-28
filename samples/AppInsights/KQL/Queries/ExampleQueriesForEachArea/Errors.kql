@@ -21,8 +21,14 @@ traces
 , eventId = customDimensions.eventId
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
 , extensionVersion = customDimensions.extensionVersion
 , failureReason = customDimensions.failureReason
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 , message
 , customDimensions
 
@@ -58,26 +64,15 @@ traces
 , alUserRole = customDimensions.alUserRole
 , alErrorCallStack = customDimensions.alErrorCallStack
 , alErrorText = customDimensions.alErrorText
-, message
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+), message
 
 
 
 // Permission error dialog shown (raw data) 
 // available from 20.1
-traces
-| where timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'RT0031'
-| project timestamp
-, aadTenantId = customDimensions.aadTenantId
-, errorMessage = customDimensions.errorMessage
-, permissionArea = customDimensions.permissionArea
-, permissionType = customDimensions.permissionType
-, clientType = customDimensions.clientType
-, companyName = customDimensions.companyName
-, component = customDimensions.component
-, componentVersion = customDimensions.componentVersion
-, environmentType = customDimensions.environmentType
-, environmentName = customDimensions.environmentName
-, eventId = customDimensions.eventId
-, message
-, customDimensions
+//
+// See KQL sample in Permissions.kql
