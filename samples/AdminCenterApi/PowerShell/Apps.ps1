@@ -3,7 +3,7 @@
 
 # Shared Parameters
 $environmentName = "Production"
-$environmentName = "Preview"
+$environmentName = "Release-21"
 #$accessToken = "" # get this from the Authenticate sample
 
 

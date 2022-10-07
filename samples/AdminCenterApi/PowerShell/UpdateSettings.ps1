@@ -7,7 +7,7 @@
 
 
 # Get update window
-$environmentName = "Production"
+$environmentName = "MyProd"
 $response = Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/settings/upgrade" `
@@ -16,7 +16,7 @@ Write-Host "Update window: $(ConvertTo-Json (ConvertFrom-Json $response.Content)
 
 
 # Set update window
-$environmentName = "Production"
+$environmentName = "MyProd"
 $preferredStartTimeUtc = "2020-06-01T02:00:00Z"
 $preferredEndTimeUtc   = "2020-06-01T09:00:00Z"
 $response = Invoke-WebRequest `
@@ -31,7 +31,7 @@ $response = Invoke-WebRequest `
 
 
 # Get scheduled updates
-$environmentName = "Production"
+$environmentName = "MyProd"
 $response = Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/upgrade" `
@@ -40,7 +40,7 @@ Write-Host "Scheduled update: $(ConvertTo-Json (ConvertFrom-Json $response.Conte
 
 
 # Get security group access
-$environmentName = "Production"
+$environmentName = "MyProd"
 $response = Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/settings/securitygroupaccess" `
@@ -49,7 +49,7 @@ Write-Host "Security group access: $(ConvertTo-Json (ConvertFrom-Json $response.
 
 
 # Set security group access
-$environmentName = "Production"
+$environmentName = "MyProd"
 $aadGroupAccessValue = "00000000-1111-2222-3333-444444444444"
 $response = Invoke-WebRequest `
     -Method Put `
@@ -62,11 +62,8 @@ $response = Invoke-WebRequest `
 
 
 # Delete security group access
-$environmentName = "Production"
+$environmentName = "MyProd"
 $response = Invoke-WebRequest `
     -Method Delete `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/settings/securitygroupaccess" `
     -Headers @{Authorization=("Bearer $accessToken")}
-
-
-
