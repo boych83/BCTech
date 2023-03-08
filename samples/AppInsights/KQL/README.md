@@ -1,31 +1,16 @@
 In this folder, you will find samples of Kusto Query Language (KQL) for each type of signal that is sent to Application Insights.
 
 # Where can I use Kusto Queries?
-You can use Kusto queries as the data source in a number of places. E.g.
-* the Logs part of Application Insights in the Azure portal
-* PowerBI reports
-* Azure Monitor Alerts
-* Azure Dashboards
-* Jupyter Notebooks (with the Kqlmagic extension)
+Read more here in docs:
+https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-analyze-with-kql
 
 # Where can I learn more about KQL?
-Here are some resources for you to get started on Kusto Query Language (KQL). Use CTRL+click to open them in a new browser tab/window.
-* [Kusto Query Language Overview](https://docs.microsoft.com/en-us/azure/kusto/query/)
-* [Kusto Query Language Tutorial](https://docs.microsoft.com/en-us/azure/kusto/query/tutorial)
-* [I know SQL. How do I do that in KQL?](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sqlcheatsheet)
-* [Kusto Query Language (KQL) from Scratch (Pluralsight course, requires subscription)](https://www.pluralsight.com/courses/kusto-query-language-kql-from-scratch)
-* [Microsoft Azure Data Explorer - Advanced KQL (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-explorer-advanced-query-capabilities/table-of-contents)
-* [How can I query multiple Application Insights resources from the same Kusto query? (blog post by Microsoft MVP Stefano Demiliani)](https://demiliani.com/2022/03/01/querying-telemetries-from-multiple-application-insights-instances/)
+Read more here in docs:
+https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-analyze-with-kql
 
 # Which tools can I use (KQL editors and clients)?
-You can write and execute KQL in various tools. E.g.
-* [Kusto Explorer (desktop application)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer). Here is [How to connect to Application Insights in Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
-* [Azure Data Explorer](https://dataexplorer.azure.com). Here is [How to connect to Application Insights in Azure Data Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
-* In a Jupyter notebook hosted in [Azure Data Studio](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides#what-is-azure-data-studio)
-* In a Jupyter notebook hosted in Visual Studio Code (with the Python and Jupyter Notebooks extensions installed)
-* Application Insights portal (Under *Logs* in the *Monitoring* menu)
-* PowerShell (using the REST api). See an example here: [Powershell samples](../Powershell)
-
+Read more here in docs:
+https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-analyze-with-kql
 
 # What signal is available in which version?
 Signal is added incrementally to Business Central. In this table you can see in which version or update a class of signal was added/modified:
@@ -69,7 +54,8 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Database deadlocks | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-deadlocks-trace |
 | Database wait statistics | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-wait-statistics-trace |
 | Verbose telemetry enabled | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/telemetry-action-enabling-detailed-telemetry-logged-telemetry |
-| General error dialogs | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-error-method-trace |
+| General error dialogs | 2022 release wave 1 (20.0) |  https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-error-method-trace |
+| Error message votes | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-error-message-voting-trace |
 | Report action and document type in reporting | 2022 release wave 1 (20.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
 | Environment lifecycle and configuration changes| 2022 release wave 1 (20.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-environment-lifecycle-trace |
 | User checklist lifecycle | 2022 release wave 1 (20.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-user-checklist-trace |
@@ -78,7 +64,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Dependency cycle discovered in permission sets | 2022 release wave 1 (20.2) | KQL sample ready, (pending link to release note) |
 | Client page views (for on-premises) | 2022 release wave 2 (21.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
 | Azure function integration | 2022 release wave 2 (21.0) | (pending link to docs) |
-| Performance Toolkit | 2022 release wave 2 (21.x) | (pending link to docs)) |
+| Performance Toolkit | 2022 release wave 2 (21.3) | KQL sample ready, pending link to docs |
 
 
 # Disclaimer

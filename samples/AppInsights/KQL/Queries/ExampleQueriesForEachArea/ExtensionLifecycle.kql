@@ -31,7 +31,7 @@ traces
 , totalTime = customDimensions.totalTime
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
 , result = customDimensions.result
-, message, customDimensions
+, message
 
 
 // Extension failed to compile (raw data)
@@ -59,7 +59,7 @@ traces
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
 , result = customDimensions.result
 , failureReason = customDimensions.failureReason
-, message, customDimensions
+, message
 
 
 // Extension published successfully (raw data)
@@ -87,7 +87,7 @@ traces
 , sqlExecutes = customDimensions.sqlExecutes
 , sqlRowsRead = customDimensions.sqlRowsRead
 , result = customDimensions.result
-, message, customDimensions
+, message
 
 
 // Extension failed to publish (raw data)
@@ -116,7 +116,7 @@ traces
 , sqlRowsRead = customDimensions.sqlRowsRead
 , result = customDimensions.result
 , failureReason = customDimensions.failureReason
-, message, customDimensions
+, message
 
 
 // Extension unpublished successfully (raw data)
@@ -143,7 +143,7 @@ traces
 , sqlExecutes = customDimensions.sqlExecutes
 , sqlRowsRead = customDimensions.sqlRowsRead
 , result = customDimensions.result
-, message, customDimensions
+, message
 
 
 // Extension failed to un-publish (raw data)
@@ -171,7 +171,7 @@ traces
 , sqlRowsRead = customDimensions.sqlRowsRead
 , result = customDimensions.result
 , failureReason = customDimensions.failureReason
-, message, customDimensions
+, message
 
 
 // TENANT OPERATIONS
@@ -202,7 +202,7 @@ traces
 , sqlExecutes = customDimensions.sqlExecutes
 , sqlRowsRead = customDimensions.sqlRowsRead
 , result = customDimensions.result
-, message, customDimensions
+, message
 
 
 // Extension synchronized failed (raw data)
@@ -210,8 +210,7 @@ traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0013' 
 | extend aadTenantId = tostring( customDimensions.aadTenantId )
-| project 
-  timestamp
+| project timestamp
 , eventId = customDimensions.eventId
 , aadTenantId
 , environmentName = customDimensions.environmentName
@@ -231,7 +230,35 @@ traces
 , sqlRowsRead = customDimensions.sqlRowsRead
 , result = customDimensions.result
 , failureReason = customDimensions.failureReason
-, message, customDimensions
+, message
+
+
+// Extension is already synchronized (raw data)
+// This signal was added in 21.1
+traces
+| where timestamp > ago(5d) 
+| where customDimensions.eventId == 'LC0056'
+| project timestamp
+, eventId = customDimensions.eventId
+, aadTenantId = customDimensions.aadTenantId 
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, extensionSynchronizationMode = customDimensions.extensionSynchronizationMode
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, failureReason = customDimensions.failureReason
+, message
 
 
 // Extension installed successfully (raw data)
@@ -258,7 +285,7 @@ traces
 , sqlExecutes = customDimensions.sqlExecutes
 , sqlRowsRead = customDimensions.sqlRowsRead
 , result = customDimensions.result
-, message, customDimensions
+, message
 
 
 // Extension failed to install (raw data)
@@ -286,7 +313,7 @@ traces
 , sqlRowsRead = customDimensions.sqlRowsRead
 , result = customDimensions.result
 , failureReason = customDimensions.failureReason
-, message, customDimensions
+, message
 
 
 // Extension updated successfully (raw data)
@@ -313,7 +340,7 @@ traces
 , sqlExecutes = customDimensions.sqlExecutes
 , sqlRowsRead = customDimensions.sqlRowsRead
 , result = customDimensions.result
-, message, customDimensions
+, message
 
 
 // Extension failed to update (raw data)
@@ -341,7 +368,7 @@ traces
 , sqlRowsRead = customDimensions.sqlRowsRead
 , result = customDimensions.result
 , failureReason = customDimensions.failureReason
-, message, customDimensions
+, message
 
 
 // Extension un-installed successfully (raw data)
@@ -369,7 +396,7 @@ traces
 , sqlExecutes = customDimensions.sqlExecutes
 , sqlRowsRead = customDimensions.sqlRowsRead
 , result = customDimensions.result
-, message, customDimensions
+, message
 
 
 // Extension failed to un-install (raw data)
@@ -397,8 +424,7 @@ traces
 , sqlRowsRead = customDimensions.sqlRowsRead
 , result = customDimensions.result
 , failureReason = customDimensions.failureReason
-, message, customDimensions
-
+, message
 
 
 // Dependent extension installed successfully (raw data)
@@ -418,8 +444,6 @@ traces
 , eventId = customDimensions.eventId
 , parentExtensionId = customDimensions.parentExtensionId
 , message
-, customDimensions
-
 
 
 // Dependent extension failed to install (raw data)
@@ -440,7 +464,9 @@ traces
 , eventId = customDimensions.eventId
 , parentExtensionId = customDimensions.parentExtensionId
 , message
-, customDimensions
+
+
+
 
 
 

@@ -1,6 +1,9 @@
 # Blog posts about telemetry
 Want some easy to digest introductions to Business Central telemetry? Here are some blog posts to get you started
 
+## Business Central Telemetry - from zero to hero
+https://demiliani.com/tag/telemetry/
+
 ## Business Central Telemetry - Giving permissions to external user to access telemetry data
 Posted on Monday August 29th, 2022 by Ricardo Paiva Moinhos
 https://ricardomoinhos.com/giving-permissions-to-external-user-to-access-telemetry-data/
@@ -8,6 +11,9 @@ https://ricardomoinhos.com/giving-permissions-to-external-user-to-access-telemet
 ## Business Central telemetry - Exploring telemetry in Excel and using a template file
 Posted on Monday August 29th, 2022 by Ricardo Paiva Moinhos
 https://ricardomoinhos.com/exploring-telemetry-in-excel-and-using-a-template-file/
+
+## Business Central telemetry - Using telemetry
+https://www.bertverbeek.nl/blog/tag/telemetry/
 
 
 

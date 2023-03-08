@@ -1,16 +1,25 @@
 // KQL samples - Feature Telemetry
-// Available from version 19.1
+// Available from version 19.1 and 22.0 (see details below)
+
+// Feature telemetry docs
+// https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-system-application-overview
+// https://github.com/microsoft/ALAppExtensions/tree/main/Modules/System/Telemetry
+// https://learn.microsoft.com/en-us/dynamics365/business-central/application/reference/system%20application/codeunit/system_application_codeunit_feature_telemetry
 
 
 // Uptake - logged from FeatureTelemetry.LogUptake
+// Available from version 19.1
 traces
 | where timestamp > ago(5d)
-| where customDimensions.alCategory == "FeatureTelemetry"
+| where customDimensions has 'FeatureTelemetry'
+| where customDimensions has 'Uptake'
+| where customDimensions.alCategory == 'FeatureTelemetry'
 | where customDimensions.alSubCategory == 'Uptake'
 | extend Category = customDimensions.alCategory
 | extend Date = format_datetime(timestamp, 'yyyy-MM-dd')
- , aadTenantId = customDimensions.aadTenantId
- , Environment = customDimensions.environmentType
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
  , SubCategory = customDimensions.alSubCategory
  , FeatureName = customDimensions.alFeatureName
  , EventName = customDimensions.alEventName
@@ -35,14 +44,18 @@ traces
 
 
 // Errors - logged from FeatureTelemetry.LogError
+// Available from version 19.1
 traces
 | where timestamp > ago(5d)
-| where customDimensions.alCategory == "FeatureTelemetry"
+| where customDimensions has 'FeatureTelemetry'
+| where customDimensions has == 'Error'
+| where customDimensions.alCategory == 'FeatureTelemetry'
 | where customDimensions.alSubCategory == 'Error'
 | extend Category = customDimensions.alCategory
 | extend Date = format_datetime(timestamp, 'yyyy-MM-dd')
- , aadTenantId = customDimensions.aadTenantId
- , Environment = customDimensions.environmentType
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
  , SubCategory = customDimensions.alSubCategory
  , FeatureName = customDimensions.alFeatureName
  , EventName = customDimensions.alEventName
@@ -66,15 +79,18 @@ traces
 
 
 // Usage - logged from FeatureTelemetry.LogUsage
+// Available from version 19.1
 traces
 | where timestamp > ago(5d)
-| where customDimensions.alCategory == "FeatureTelemetry"
+| where customDimensions has 'FeatureTelemetry'
+| where customDimensions has 'Usage'
+| where customDimensions.alCategory == 'FeatureTelemetry'
 | where customDimensions.alSubCategory == 'Usage'
 | extend Category = customDimensions.alCategory
 | extend Date = format_datetime(timestamp, 'yyyy-MM-dd')
- , aadTenantId = customDimensions.aadTenantId
- , Environment = customDimensions.environmentType
- , SubCategory = customDimensions.alSubCategory
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType , SubCategory = customDimensions.alSubCategory
  , FeatureName = customDimensions.alFeatureName
  , EventName = customDimensions.alEventName
  , CallerAppName = customDimensions.alCallerAppName
@@ -95,3 +111,54 @@ traces
 , 'N/A'
 )
 
+
+// Feature Telemetry app error
+// More than one telemetry logger has been registered for publisher <publisher>
+// The owner of the app needs to fix this if they want telemetry from the Feature Telemetry system module 
+traces
+| where timestamp > ago(7d) // change as needed
+| where customDimensions has 'AL0000G7J'
+| where customDimensions.eventId == 'AL0000G7J'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, appId = customDimensions.alCallerAppId
+, appPublisher = customDimensions.alCallerPublisher
+, appName = customDimensions.alCallerAppName
+, appVersion = customDimensions.alCallerAppVersion
+
+
+// Feature Telemetry app error
+// An app from publisher <publisher> is sending telemetry, but there is no registered telemetry logger for this publisher.
+// The owner of the app needs to fix this if they want telemetry from the Feature Telemetry system module 
+traces
+| where timestamp > ago(7d) // change as needed
+| where customDimensions has 'AL0000G7K'
+| where customDimensions.eventId == 'AL0000G7K'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, appId = customDimensions.alCallerAppId
+, appPublisher = customDimensions.alCallerPublisher
+, appName = customDimensions.alCallerAppName
+, appVersion = customDimensions.alCallerAppVersion
+
+
+
+
+// Feature management state changes
+// Available from 22.0
+traces
+| where timestamp > ago(7d) // change as needed
+| where customDimensions has 'AL0000JT3'
+| where customDimensions.eventId == 'AL0000JT3'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, FeatureId = customDimensions.alFeatureId
+, FeatureDescription = customDimensions.alFeatureDescription // which feature
+, Status = customDimensions.alStatus // enabled/disabled
+, usertelemetryId = user_Id // who did it

@@ -6,9 +6,9 @@
 // Long running AL (RAW data)
 traces
 | where timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'RT0018' 
-    and customDimensions.alObjectId > 0 // filter out internal server calls
-| extend eventId = customDimensions.eventId 
+| where customDimensions.eventId == 'RT0018' 
+| where customDimensions.alObjectId > 0 // filter out internal server calls
+| project eventId = customDimensions.eventId 
 , aadID = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
@@ -18,6 +18,7 @@ traces
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
 , alStackTrace = customDimensions.alStackTrace
+// use the KQL snippet parseStackTrace to get bottom of the stack trace details
 , clientType = customDimensions.clientType
 , executionTime = customDimensions.executionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
@@ -28,6 +29,8 @@ traces
 , extensionVersion = customDimensions.extensionVersion
 , longRunningThreshold = customDimensions.longRunningThreshold
 , longRunningThresholdInMS = toreal(totimespan(customDimensions.longRunningThreshold))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes // This dimension was introduced in Business Central 2023 release wave 1, version 22.0
+, sqlRowsRead = customDimensions.sqlRowsRead // This dimension was introduced in Business Central 2023 release wave 1, version 22.0
 , usertelemetryId = case(
   // user telemetry id was introduced in the platform in version 20.0
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id

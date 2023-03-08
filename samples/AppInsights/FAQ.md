@@ -25,25 +25,15 @@ Here is a quote from a partner using telemetry:
 _We have been using telemetry for some months now and have enabled 20+ apps as well as environment data from dev systems and build pipelines. Last month we ingested 800+ traces that corresponded to 2.3GB of data. Eventually we might hit some of those thresholds, but then we can decide if we want to spend money on telemetry (probably will) and how much. With our current setup, we will probably limit ingestion and once that no longer suffices, we will add sampling to the mix._
 
 ## How can I control cost?
-See our documentation here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview#ingest
+See our documentation here: https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-control-cost
 
-In August 2022, the Azure Monitor made a new feature available (in preview) called *Data Collection Rules*. This allows you to define rules on what is ingested into your telemetry resource. 
+In August 2022, the Azure Monitor made a new feature available called *Data Collection Rules*. This allows you to define rules on what is ingested into your telemetry resource. 
  
 These two blog posts by Business Central community telemetry experts Bert Verbeek and Stefano Demiliani
 * https://www.bertverbeek.nl/blog/2022/08/10/save-cost-on-your-telemetry/
 * https://demiliani.com/2022/08/09/dynamics-365-business-central-filtering-telemetry-signals-with-azure-monitor-data-collection-rules/
 
 go into a lot of details on how this works. When the feature is made generally available, we will add similar guidance to the official Business Central documentation.
-
-To help you get started with setting up Data Collection Rules, we added a number of sample KQL queries that illustrates common filter scenarios:
-* how to filter out one or more events (I don't need these, no need to pay for them)
-* how to only filter part of an event (I only want to see events when this fails or I only want 10% of these events)
-* how to filter on AAD tenant (I am an ISV and I want to start slowly on telemetry, so only enabling it for a few customers)
-* how to filter on environment type (I am an ISV and I only want data from production environments)
-* how to filter on app dimensions (I am a VAR and this app/publisher is too noisy)
-
-See the sample queries here: [DataCollectionRules](KQL/Queries/DataCollectionRules)
-
 
 You can use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyIngestion.kql) to see the data distribution of different event ids in your telemetry database.
 
@@ -110,6 +100,84 @@ Another option is to emit ETW events to Azure Log Analytics, see Marije Brummels
 If you have data present in Application Insights, please check the setting in the *Time range* selector on the  dashboard:
 ![Time range selector in Azure Dashboard](images/dashboard.png)
 
+
+# Q&A from Office Hours 2022-10-04
+## Could I have alerts by email or teams when I receive an error?
+
+A: This is not built into the App - however, the telemetry is added to Application Insights - and there you can set up 
+flows that send email on e.g. a signal of a given type.
+
+
+## How can we make a demo of the telemetry? Is that only available in an BC365 saas? Or can we install and test the telemetry  inside a docker container?
+
+A: You can set the Application Insights Connection String for an on-premise server (a server setting). See https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-enable-application-insights#for-on-premises-environments-single-tenant-mode
+
+
+## These options for ISV are only for AppSource or it is possible to use them as PTE extension?
+
+A: The ISV app works for both appsource apps and PTEs.
+
+
+## Can you filter on environment type, that is SaaS vs OnPrem?"
+
+A: Yes. On-prem will have common/default as aad tenant id(Can you filter on environment type, that is SaaS vs OnPrem?
+
+
+## Is there a best practice how to exclude the events coming from the own development of the ISV solution to distinguish it from events coming from the real users/customers?
+
+A: Yes, this is documented here: https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview#ingest
+or here https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/FAQ.md#how-can-i-control-cost
+
+
+## What kind of powerbi license is needed to use these apps?
+
+A: Power bi pro (costs 10 USD per month per user)
+
+
+## Could you please send the link to download the power bi for ISV?
+
+A: This is the install link for the ISV app: aka.ms/bctelemetry-isv-app
+This is the install link for the VAR app: aka.ms/bctelemetryreport
+
+
+## We use Telemetry for all many customers. Request: can we have Tenant ID (or better still Name from the mapping) and Environment Name appearing on every table please so we can filter on multiple customers/environments at once
+
+A: Yes. This is already done in many of the pages (except in the performance report). More will be transformed to show this.
+
+
+## We have many Product Apps with different Application Insights. Can we use just one dashboard?
+
+A: No. The Power BI app cannot read data from multiple Application Insights resources.
+
+
+## How often is the data updated in the Power BI Dashboards?  
+
+A: Default is daily. You can change this in the dataset settings. See https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-power-bi-app#configure-an-app-after-initial-setup
+
+
+## If a customer contacts support because they have had an error, how quickly will it be to view/validate on the dashboard?"
+
+A: Default refresh of data in the dashboard is daily. You can change this in the dataset settings. See https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-power-bi-app#configure-an-app-after-initial-setup
+
+
+## The ability to export the ""underlying data"" is disabled? Will we be able to do this in the future?
+
+A: This was fixed in the December 2022 update.
+
+
+## Does activating telemetry affect the performance of Business Central?
+
+A: Nothing that users will notice.
+
+
+## Is there some kind of estimater to give an indication on much it cost to collect and store all this data?
+
+A: At aka.ms/bctelemetry there are descriptions of how you can control costs. So far we have not had partners reporting significant costs - the lowest SKU will normally be sufficient
+
+
+## Can you remind where to go to set the Tenant mapping? I had the app installed for already?
+
+A: See https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-power-bi-app#configure-an-app-after-initial-setup
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 

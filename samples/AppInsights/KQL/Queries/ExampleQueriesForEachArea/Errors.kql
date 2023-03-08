@@ -18,6 +18,8 @@ traces
 , componentVersion = customDimensions.componentVersion
 , environmentType = customDimensions.environmentType
 , environmentName = customDimensions.environmentName
+, errorMessageInUsersLanguage = customDimensions.alErrorMessage
+, errorMessageInEnglish = customDimensions.alEnglishLanguageDiagnosticsMessage // This dimension was introduced in Business Central 2023 release wave 1, version 21.4.
 , eventId = customDimensions.eventId
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
@@ -31,6 +33,29 @@ traces
 )
 , message
 , customDimensions
+
+
+// Error Message Votes
+// Available from version 20.0
+traces
+| where timestamp >= ago(7d) // adjust as needed. 
+| where customDimensions has 'CL0002'
+| where customDimensions.eventId == 'CL0002'
+| where customDimensions.userFeedback in ('Yes', 'No')
+| extend AadTenantId = tostring( customDimensions.aadTenantId )
+, EnvironmentName = tostring( customDimensions.environmentName )
+| project timestamp
+, AadTenantId, EnvironmentName
+, ClientType = tostring( customDimensions.clientType )
+, ErrorMessage = tostring( customDimensions.errorMessage )
+, ExtensionId = tostring( customDimensions.appId )
+, ExtensionName = tostring( customDimensions.appName )
+, ExtensionVersion = tostring( customDimensions.appVersion )
+, ExtensionPublisher = tostring( customDimensions.appPublisher )
+, StackTrace = customDimensions.alStackTrace
+, HostType = customDimensions.hostType
+, UserFeedback = customDimensions.userFeedback
+, UserLocale = customDimensions.userLocale
 
 
 // available from 19.1
