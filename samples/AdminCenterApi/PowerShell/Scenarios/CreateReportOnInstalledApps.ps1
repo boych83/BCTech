@@ -8,8 +8,8 @@
 #  - BC Admin Center API; get an environment's installed apps
 #  - BC Admin Center API: get an environment's available app updates
 
-Install-Module PartnerCenter  # only needs to be done once, see documentation at https://docs.microsoft.com/powershell/module/partnercenter
-Import-Module PartnerCenter
+Install-Module PartnerCenter  # only needs to be done once, see documentation at https://learn.microsoft.com/powershell/module/partnercenter
+
 # PREPARATION
 Connect-PartnerCenter
 

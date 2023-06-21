@@ -1,31 +1,77 @@
+Welcome to the release notes for the usage app on Business Central app telemetry.
+
+Below, you can see 
+1) ideas for upcoming releases, 
+2) the current state of vNext (the next version to be released), and 
+3) release notes for all released version of the app since the initial release on appsource back in April 2022.
+
+
+-------------
+Pending teams
+-------------
+* Usage: Add app id to Feature usage, Feature uptake (pending change in telemetry module)  
+
+
+-----
 Ideas
+-----
 * Dataset: on all queries, link to AppDim. Add global filters, obsolete AppIdDim
 * Administration: App inventory query needs a rework 
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
+* Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
+* Add header tooltips (where appropriate)
 
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
+* Errors: On page IncomingWebserviceErrors, added two new visuals. First one shows the new OData error dimensions 'Failure Reason' and 'Diagnostic Message'. The second one shows the User Agent set by the caller.
+* Performance: On page 'Long Running AL', use new dimension exclusiveTime (this dimension was introduced in 21.6/22.0)
+* Performance: On page 'Incoming Web Service performance', added calculations on queue time (introduced in telemetry in v22)
+
+TODO
+* Performance: (in 22.0/22.1) On page 'Database lock timeouts', added isolationLevel to SQL visual
+
+------------------
+2023-05-03 release
+------------------
+* Dataset: fixed data load bug in queries AppIdDim and EnvironmentDim (queries did not respect time filter)
+* Dataset: On IncomingWebserviceErrors, moved category and connector info into their own dimensions.
+* Dataset: On IncomingWebservicePerformance, moved category and connector info into their own dimensions.
+* Dataset: on Report errors query, moved tenant, object, app, and client type info to their own dimensions
+* Dataset: On BCPTRuns, fixed duplicate key error
+* Dataset: On ExtensionUpdatePerformance, tuned data load and moved tenant info + extension info into their own dimensions.
+* Usage: Keyvault, visuals looked weird, not anymore
+* Errors: On page Keyvault errors, visuals looked weird, not anymore
+* Errors: On page Report errors page, split the extension/object visual in two
+* Errors: On page Error Dialogs, fixed AL stacktrace visuals that did not filter
+* Performance: On page Reports, added visual to show time to generate dataset and render the report.
+* Performance: On App updates page, changed extension visual and changed statistics visual to use a matrix
+
+
+------------------
+2023-04-05 release
+------------------
+* Dataset: On table ErrorDialogs, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
 * Dataset: On table LongRunningAL, tuned data load and moved stacktrace, client type, object info, app info and sql info into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: On table OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
+* Dataset: On tables KeyVaultErrors and KeyVaultUsage, moved app info into its own dimensions. Also removed filters on tenant info as this does exist in the signal. 
+* Dataset: fixing bug in data loading if telemetry has BCPT data prior to 21.3 (BCTech GitHub Issue #188).
+* Usage report: new page 'MAT/WAT/DAT' showing Monthly/Weekly/Daily tenants.
+* Usage: On page Keyvault usage, used combined app name and id on X by app visual
+* Performance: new page 'Session creation' that shows impact on session performance by your apps
 * Performance report: On page 'Long Running AL', added per-environment visual and aligned per-app/per-object visuals to new design
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
 * Performance: add visual to slow logins page on outgoing ws call happening in the OnCompanyOpen trigger
 * Errors: new page 'Feature Telemetry app errors', showing events AL0000G7J and AL0000G7K that indicate that extensions use the Feature Telemetry module wrong
 * Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
-* Errors: On page 'Error dialogs', also show error message in English (available from 21.4)
-
-TODO (not in the beta app yet)
-* Usage: use combined app name and id on X by app visuals (clients, locations, pageviews, reports, ...)
-* Performance: add new page to show impact on app code in session performance
-* Usage report: new page 'MAT/WAT/DAT' showing Monthly/Weekly/Daily tenants.
+* Errors: On page 'Error dialogs', also show error message in English (available from 21.4), added per-app/per-object visuals.
+* Errors: On page Keyvault errors, added errors by app visual
 
 
 ------------------
-2023-02-01 release (to be released on 2023-03-01, testing completed)
-Install beta app from: https://aka.ms/bctelemetryreportbeta
+2023-03-01 release
 ------------------
 * Dataset: On table LongRunningSQLQueries, tuned data load and moved stacktrace and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: On tables ExtensionLifeCycleErrors, ExtensionUpdatePerformanceQuery, IncomingWebServiceErrorsQuery, OutgoingWebServiceErrorsQuery, tuned data load and moved tenant and extension info into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
@@ -132,12 +178,6 @@ Initial version published to app source for public preview.
 -----
 Ideas 
 -----
--	Is it possible to add list of objects in a format like the AAD tenant mapping? So we can see objects especially pages and reports never used?
-Need to know the scenario better here
-
--	In the extension lifecycle please filter out the “already synced” ;)
-This is being fixed now by the compiler team.
-
 -	In some pages you print stack traces or error message. This is fine, but can we add the operationId, so the developers can use it in KQL for further analysis.
 Good idea, also valuable for the VAR app
 
@@ -145,18 +185,3 @@ Good idea, also valuable for the VAR app
 Good idea, also valuable for the VAR app
 
 -	Is it possible to visualize performance degradation over days or weeks?
-
--	Is it possible to group error message, like permission related error messages?
-
--	For performance and error analysis it would be nice the see if the process was initiated by the Job Queue. This could be done by object ids 450 or 451 in the call stack. Filtering on the background client type is not sufficient.
-Good idea, also valuable for the VAR app
-
-DONE: For webservice calls (especially the outgoing ones) add a filter for OnPrem, because this is nothing we can influence as an ISV.
-
-
-All pages
-* app filter slicer
-
-Administration
-* Updates funnel page 
-* app source validation

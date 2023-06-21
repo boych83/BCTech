@@ -1,52 +1,129 @@
+Welcome to the release notes for the usage app on Business Central environment telemetry.
+
+Below, you can see 
+1) ideas for upcoming releases, 
+2) the current state of vNext (the next version to be released), and 
+3) release notes for all released version of the app since the initial release on appsource back in April 2022.
+
+
+-------------
 Pending teams
+-------------
 * Usage: Add user telemetry id to page view pages and allow filters on this (when available in client telemetry)
 * Usage: add role dimension to page views (when available in client telemetry)
 * Usage: log search terms (opt-in) (when available in client telemetry)
-* Job Queue errors/performance: add dimension alJobQueueObjectName (when available - pending app team bugfix)
+* Usage: New page (for 22.1) 'Onboarding'
+* Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending app team changes to email telemetry)
+* Job Queue errors/performance: add dimension alJobQueueObjectName and alJobQueueDescription (when available - pending app team bugfix)
 * Administration: Permission set changes (pending app team on adding permission set name)
-* Database deadlocks page: need to fix URL (hide) for user telemetry id
+* Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
+* New API error signal (coming in 22.x in June 2023)
+        public const string APIMetadataInvalidEntity = "RT0033";
+        public const string APIMetadataInvalidControl = "RT0034";
+        public const string APIMetadataInvalidWebServiceRecord = "RT0035";
+        public const string APIMetadataInvalidMetaField = "RT0036";
+        public const string APIMetadataInvalidPage = "RT0037";
+        public const string APIMetadataConflictingNavigationProperties = "RT0038";
+        public const string APIMetadataInvalidWebServiceMetadata = "RT0039";
 
+, 'RT0033'
+, 'RT0034'
+, 'RT0035'
+, 'RT0036'
+, 'RT0037'
+, 'RT0038'
+, 'RT0039'
+, 'RT0040'
+
+
+-----
 Ideas
+-----
+* Dataset: include list for event ids as a parameter
+* Dataset: Introduce new (advanced) parameter: partitions and maybe binsize
 * Usage: Feature uptake page
+* Usage: add license type on sessions page
+* Errors: Add recurring failing task scheduler/job queue jobs to recommendations
+* Errors: Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
+* Errors: cross tenant comparisons of errors (is this normal?)
+* Errors: on 'Feature Errors' page, add top/bottom stacktrace visuals
+* Performance: cross tenant comparisons of performance (is this normal?)
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
-* Errors: Add recurring failing task scheduler/job queue jobs to recommendations
-* Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
-* Dataset: include list for event ids as a parameter
-* Usage: add license type on sessions page
-* Introduce new (advanced) parameter: partitions and maybe binsize
-* optimize IncomingWebServiceErrorsQuery, OutgoingWebServiceErrorsQuery (copy patterns from ISV app)
-* cross tenant comparisons of performance and errors
+* Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
+* update application areas with 22.0 new app features
+* Administration: New page on PTE validations signal
+* Add header tooltips (where appropriate)
+* Update Connector predicate
+* Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
-* Dataset: on OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
-* Usage: new page 'Client actions'
+TBA
+
+
+------------------
+2023-06-22 release
+------------------
+* Dataset: On JobQueuePerformance, tuned data load and moved tenant info into its own dimension.
+* Errors: On page IncomingWebserviceErrors, added two new visuals. First one shows the new OData error dimensions 'Failure Reason' and 'Diagnostic Message'. The second one shows the User Agent set by the caller.
+* Errors: On page ConnectorErrors, added new visual to show new OData error dimensions 'Failure Reason' and 'Diagnostic Message'
+* Performance: On all pages, added overview section with AI visuals and top 10 avg. 
+* Performance: On page 'Incoming Web Service performance', added calculations on queue time (introduced in telemetry in v22)
+* Performance: On page 'Long Running AL', use new dimension exclusiveTime (this dimension was introduced in 21.6/22.0)
+* Performance: (in 22.0/22.1) On page 'Database lock timeouts', added isolationLevel to SQL visual
+* Administration: New page (22.1) 'Cloud Migration'
+
+
+------------------
+2023-05-01 release
+------------------
+* Dataset: On ExtensionUpdatePerformance, tuned data load and moved tenant info + extension info into their own dimensions.
+* Dataset: On IncomingWebserviceErrors, tuned data load and moved tenant info, extension info, category, connector info, and object info into their own dimensions.
+* Dataset: On ReportErrors, tuned data load and moved tenant info, extension info, client info, and object info into their own dimensions.
+* Dataset: On BCPTRuns, fixed duplicate key error
+* Errors: fixed AL stacktrace visuals that did not filter
+* Errors: On page 'Incoming Webservice Errors', added per-app/per-object visuals.
+* Errors: On page 'Connector Errors', added per-app/per-object visuals.
+* Errors: On page 'Report Errors', add per-app/per-object visuals.
+* Errors: on 'Database deadlocks' page, add top/bottom stacktrace visuals
+* Performance: On page app updates, changed visuals to use a matrix
+* Performance: On page 'Reports', added visual to show time to generate dataset and render the report.
+* Administration: On page 'Company changes', added user id
+
+
+------------------
+2023-04-05 release
+------------------
+* Dataset: On OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
+* Dataset: On ConfigurationPackages, tuned data load and moved tenant info, operation type, and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Dataset: Fixing bug in data loading if telemetry has BCPT data prior to 21.3 (BCTech GitHub Issue #188).
+* Dataset: On table ErrorMessageVotes, moved stacktrace, tenant infom and client type into their own dimensions.
+* Dataset: On tables JobQueueErrors and Locktimeouts moved stacktrace to the stacktrace dimension
+* Dataset: On table PermissionErrors, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
+* Dataset: On table ErrorDialogs, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
+* Dataset: On CompanyLifecycle table, added new Company Initialized event (available in 22.0)
+* Usage: New page (for 22.0) 'Client actions'
 * Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
-* Errors: On page 'Error dialogs', also show error message in English (available from 21.4)
+* Errors: On page 'Error dialogs', also show error message in English (available from 21.4), added per-app/per-object visuals.
+* Errors: On page 'Error Messages' page, added visuals for top/bottom of AL call stack 
+* Errors: On page 'Permission Errors' page, add visuals for top/bottom of AL call stack, added filter to check if an error happened in a Job Queue entry run and filter to check if an error happened in OnCompanyOpen. 
+* Errors: On page 'Job Queue Errors' page, added visuals for top/bottom of AL call stack, added visuals for top/bottom of stacktrace
+* Errors: On page 'Configuration Packages Errors', added indicator if no errors are shown. Fixed filters.
+* Performance: On 'Lock timeouts' page, added filter to check if an operation happened in a Job Queue entry run and filter to check if lock timeout happened in OnCompanyOpen, and filter to check if lock timeout happened in a number series.
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
-* Performance: add visual to slow logins page on outgoing ws call happening in the OnCompanyOpen trigger
+* Performance: On the slow logins page, added visuals on outgoing ws call and on lock timeouts happening in the OnCompanyOpen trigger
+* Performance: Cleared/fixed environment filters on all pages
+* Performance: On page 'Configuration Packages', added min/max measures to the statistics visual. Fixed filters.
 * Administration: New page 'Feature management' added (for 22.0)
 * Administration: New page 'Permission changes' added (for 22.0)
 
 
-None of this is in the beta app yet
-* update application areas with 22.0 new app features
-* Performance report: On page 'Long Running SQL', add a filter on isolationLevel (in 22.0)
-* Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
-* Errors: On page 'permission errors' page, add visuals for top/bottom of AL call stack 
-* Errors: On page 'error messages' page, add visuals for top/bottom of AL call stack 
-* Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack
-* Errors: On page 'job queue errors' page, add visuals for top/bottom of AL call stack  
-
-
-
 ------------------
-2023-02-01 release (to be released on 2023-03-01, testing completed)
-Install beta app from: https://aka.ms/bctelemetryreportbeta
+2023-03-01 release 
 ------------------
 * Dataset: On table SQLDeadlocks, Added user telemetry id and URL to the User card in BC. Tuned data load and moved object info, extension info, sql details, stacktrace, and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: On table LockTimeouts, introduced sqlHashDim
