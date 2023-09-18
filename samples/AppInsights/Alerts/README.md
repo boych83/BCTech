@@ -20,6 +20,7 @@ This part of the samples repo contains examples of KQL queries that you can use 
 | Cloud Migration Errors | Errors | VAR | Alert on errors happening in cloud migrations. | AL0000K0I | [CloudMigrationErrors.kql](./AlertingKQLSamples/CloudMigrationErrors.kql) |
 | Database performance | Performance | ISV/VAR | Spot database regressions: Look back 60 days and count number of long running SQL queries for 30 days. Compare with the count for the previous 30 days. | RT0005 | [DatabaseRegressions.kql](./AlertingKQLSamples/DatabaseRegressions.kql) |
 | Database performance | Performance | ISV/VAR | Spot if you have seen a give long running query before by getting a md5 hash on the SQL query and the AL stack trace | RT0005 | [LongRunningQueriesForBugskql.kql](./AlertingKQLSamples/LongRunningQueriesForBugskql.kql) |
+| Email Errors | Errors | VAR | Alert on errors when sending emails. | AL0000CTP, AL0000GKK, AL0000GKJ, AL0000GKL | [EmailFailures.kql](./AlertingKQLSamples/EmailFailures.kql) |
 | Extensions(s) failed to install  | Errors | ISV/VAR | Alert if one or more extensions fail to install. | LC0011 | [ExtensionInstallFailures.kql](./AlertingKQLSamples/ExtensionInstallFailures.kql) |
 | Extensions(s) failed to upgrade  | Errors | ISV/VAR | Alert if one or more extensions fail to upgrade. | RT0010 | [ExtensionUpgradeFailures.kql](./AlertingKQLSamples/ExtensionUpgradeFailures.kql) |
 | Extensions(s) installed  | Lifecycle | ISV/VAR | Alert if one or more extensions was installed. | LC0010 | [ExtensionInstalled.kql](./AlertingKQLSamples/ExtensionInstalled.kql) |
@@ -33,6 +34,7 @@ This part of the samples repo contains examples of KQL queries that you can use 
 | Feature Management changes | Change management | VAR | Alert when an administrator changes a switch on the Feature Management page for an environment. | AL0000JT3 | [FeatureTelemetry.kql](../KQL/Queries/ExampleQueriesForEachArea/FeatureTelemetry.kql) |
 | Permission errors | Errors | VAR | Setup notifications if users get permission errors. | RT0031 | [Permissions.kql](../KQL/Queries/ExampleQueriesForEachArea/Permissions.kql) |
 | Job Queue errors | Errors | VAR | Get alerted on job queue entries fail. | AL0000E26 | [JobQueueFailures.kql](./AlertingKQLSamples/JobQueueFailures.kql) |
+| Job Queue errors | Errors | VAR | Get alerted on job queue entries fail and are stopped. | AL0000JRG | [JobQueueFailures.kql](./AlertingKQLSamples/JobQueueFailures.kql) |
 | Job Queue errors | Errors | VAR | Get alerted if no job queue entries have been started in a given time period. | AL0000E26 | [NoJobQueueRuns.kql](./AlertingKQLSamples/NoJobQueueRuns.kql) |
 | Sensitive field monitoring | Security/Auditing | VAR | Alert if sensitive fields are added/removed to the monitoring list and if their values change. | AL0000DD3, AL0000EMW, AL0000CTE | [SensitiveFieldMonitoring.kql](./AlertingKQLSamples/SensitiveFieldMonitoring.kql) |
 | Login errors | Errors | VAR | Alert if sessions fail to get created. | RT0001, RT0002 | [LoginFailures.kql](./AlertingKQLSamples/LoginFailures.kql) |

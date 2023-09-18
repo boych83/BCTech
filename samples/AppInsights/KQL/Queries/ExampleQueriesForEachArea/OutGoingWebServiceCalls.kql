@@ -18,11 +18,12 @@ traces
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
-, alStackTrace = customDimensions.alStackTrace // This dimension was introduced in Business Central 2022 release wave 1, version 20.1.
+, alStackTrace = customDimensions.alStackTrace // This dimension was introduced in Business Central 2022 release wave 2, version 21.3.
 , clientType = customDimensions.clientType // This dimension was introduced in Business Central 2022 release wave 2, version 21.4.
 , endpoint = customDimensions.endpoint
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
 , extensionVersion = customDimensions.extensionVersion
 , httpMethod = toupper( customDimensions.httpMethod ) // httpMethod is logged as the value used in the AL code
 // httpReturnCode was deprecated in version 17.2. Use httpStatusCode instead 
@@ -40,3 +41,8 @@ traces
 | extend httpHeadersTmp =  tostring( httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
 | extend Authorization = tostring( httpHeadersJSON.['Authorization'] )
+| extend url_json = parse_url( tostring(customDimensions.endpoint) )
+| extend host = url_json.Host
+, path = url_json.Path
+, scheme = url_json.Scheme
+| project-away url_json

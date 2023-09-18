@@ -10,31 +10,25 @@
 // Uptake - logged from FeatureTelemetry.LogUptake
 // Available from version 19.1
 traces
-| where timestamp > ago(5d)
+| where timestamp > ago(5d) // adjust as needed
 | where customDimensions has 'FeatureTelemetry'
 | where customDimensions has 'Uptake'
 | where customDimensions.alCategory == 'FeatureTelemetry'
 | where customDimensions.alSubCategory == 'Uptake'
-| extend Category = customDimensions.alCategory
-| extend Date = format_datetime(timestamp, 'yyyy-MM-dd')
+| project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
- , SubCategory = customDimensions.alSubCategory
- , FeatureName = customDimensions.alFeatureName
- , EventName = customDimensions.alEventName
- , CallerAppName = customDimensions.alCallerAppName
- , CallerAppVersionMajor = customDimensions.alCallerAppVersionMajor
- , CallerAppVersionMinor = customDimensions.alCallerAppVersionMinor
- , ClientType = customDimensions.alClientType
- , Company = customDimensions.alCompany
- , IsEvaluationCompany = customDimensions.alIsEvaluationCompany
- , TenantLicenseState = customDimensions.alTenantLicenseState
- , IsAdmin = customDimensions.alIsAdmin
- , CountryCode = customDimensions.alCountryCode
- , IsExpectedUpdate = customDimensions.alIsExpectedUpdate
- , CallerCustomDimensions = bag_remove_keys(customDimensions, dynamic(['alCategory', 'aadTenantId', 'environmentType', 'alSubCategory', 'alFeatureName', 'alEventName',
-    'alCallerAppName', 'alCallerAppVersionMajor', 'alCallerAppVersionMinor', 'alClientType', 'alCompany', 'alIsEvaluationCompany', 'alTenantLicenseState', 'alIsAdmin', 'alCountryCode', 'alIsExpectedUpdate']))
+, companyName = customDimensions.companyName
+, clientType = customDimensions.alClientType
+, eventId = customDimensions.eventId
+, featureName = customDimensions.alFeatureName
+, eventName = customDimensions.alEventName
+, category = customDimensions.alCategory
+, appName = customDimensions.alCallerAppName // added in 20.0
+, appId = customDimensions.alCallerAppId     // added in 22.0
+, appPublisher = customDimensions.alCallerPublisher // added in 20.0
+, appVersion = customDimensions.alCallerAppVersion // added in 20.0
 , usertelemetryId = case(
   // user telemetry id was introduced in the platform in version 20.0
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
@@ -48,34 +42,35 @@ traces
 traces
 | where timestamp > ago(5d)
 | where customDimensions has 'FeatureTelemetry'
-| where customDimensions has == 'Error'
+| where customDimensions has 'Error'
 | where customDimensions.alCategory == 'FeatureTelemetry'
 | where customDimensions.alSubCategory == 'Error'
-| extend Category = customDimensions.alCategory
-| extend Date = format_datetime(timestamp, 'yyyy-MM-dd')
+| project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
- , SubCategory = customDimensions.alSubCategory
- , FeatureName = customDimensions.alFeatureName
- , EventName = customDimensions.alEventName
- , CallerAppName = customDimensions.alCallerAppName
- , CallerAppVersionMajor = customDimensions.alCallerAppVersionMajor
- , CallerAppVersionMinor = customDimensions.alCallerAppVersionMinor
- , ClientType = customDimensions.alClientType
- , Company = customDimensions.alCompany
- , IsEvaluationCompany = customDimensions.alIsEvaluationCompany
- , TenantLicenseState = customDimensions.alTenantLicenseState
- , IsAdmin = customDimensions.alIsAdmin
- , CountryCode = customDimensions.alCountryCode
- , IsExpectedUpdate = customDimensions.alIsExpectedUpdate
- , CallerCustomDimensions = bag_remove_keys(customDimensions, dynamic(['alCategory', 'aadTenantId', 'environmentType', 'alSubCategory', 'alFeatureName', 'alEventName',
-    'alCallerAppName', 'alCallerAppVersionMajor', 'alCallerAppVersionMinor', 'alClientType', 'alCompany', 'alIsEvaluationCompany', 'alTenantLicenseState', 'alIsAdmin', 'alCountryCode', 'alIsExpectedUpdate']))
+, companyName = customDimensions.companyName
+, clientType = customDimensions.alClientType
+, eventId = customDimensions.eventId
+, featureName = customDimensions.alFeatureName
+, eventName = customDimensions.alEventName
+, category = customDimensions.alCategory
+, appName = customDimensions.alCallerAppName // added in 20.0
+, appId = customDimensions.alCallerAppId     // added in 22.0
+, appPublisher = customDimensions.alCallerPublisher // added in 20.0
+, appVersion = customDimensions.alCallerAppVersion // added in 20.0
+, errorCallStack = customDimensions.alErrorCallStack
+, errorText = customDimensions.alErrorText
 , usertelemetryId = case(
   // user telemetry id was introduced in the platform in version 20.0
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
 )
+
+
+ 
+
+
 
 
 // Usage - logged from FeatureTelemetry.LogUsage
@@ -86,31 +81,25 @@ traces
 | where customDimensions has 'Usage'
 | where customDimensions.alCategory == 'FeatureTelemetry'
 | where customDimensions.alSubCategory == 'Usage'
-| extend Category = customDimensions.alCategory
-| extend Date = format_datetime(timestamp, 'yyyy-MM-dd')
+| project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType , SubCategory = customDimensions.alSubCategory
- , FeatureName = customDimensions.alFeatureName
- , EventName = customDimensions.alEventName
- , CallerAppName = customDimensions.alCallerAppName
- , CallerAppVersionMajor = customDimensions.alCallerAppVersionMajor
- , CallerAppVersionMinor = customDimensions.alCallerAppVersionMinor
- , ClientType = customDimensions.alClientType
- , Company = customDimensions.alCompany
- , IsEvaluationCompany = customDimensions.alIsEvaluationCompany
- , TenantLicenseState = customDimensions.alTenantLicenseState
- , IsAdmin = customDimensions.alIsAdmin
- , CountryCode = customDimensions.alCountryCode
- , IsExpectedUpdate = customDimensions.alIsExpectedUpdate
- , CallerCustomDimensions = bag_remove_keys(customDimensions, dynamic(['alCategory', 'aadTenantId', 'environmentType', 'alSubCategory', 'alFeatureName', 'alEventName',
-    'alCallerAppName', 'alCallerAppVersionMajor', 'alCallerAppVersionMinor', 'alClientType', 'alCompany', 'alIsEvaluationCompany', 'alTenantLicenseState', 'alIsAdmin', 'alCountryCode', 'alIsExpectedUpdate']))
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, clientType = customDimensions.alClientType
+, eventId = customDimensions.eventId
+, featureName = customDimensions.alFeatureName
+, eventName = customDimensions.alEventName
+, category = customDimensions.alCategory
+, appName = customDimensions.alCallerAppName // added in 20.0
+, appId = customDimensions.alCallerAppId     // added in 22.0
+, appPublisher = customDimensions.alCallerPublisher // added in 20.0
+, appVersion = customDimensions.alCallerAppVersion // added in 20.0
 , usertelemetryId = case(
   // user telemetry id was introduced in the platform in version 20.0
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
 )
-
 
 // Feature Telemetry app error
 // More than one telemetry logger has been registered for publisher <publisher>

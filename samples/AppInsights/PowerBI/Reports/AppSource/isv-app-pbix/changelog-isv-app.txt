@@ -9,7 +9,7 @@ Below, you can see
 -------------
 Pending teams
 -------------
-* Usage: Add app id to Feature usage, Feature uptake (pending change in telemetry module)  
+* Performance: (in 22.0/22.1) On page 'Database lock timeouts', added isolationLevel to SQL visual
 
 
 -----
@@ -20,18 +20,57 @@ Ideas
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Add header tooltips (where appropriate)
+* (pending 4 tasks below) Usage: Add global page filters on AppDim. Remove page specific filters.
+* Usage: make 'Page views' page filter on AppDim
+* Usage: make 'Locations' page filter on AppDim
+* Usage: make 'Clients' page filter on AppDim
+* Usage: make 'MAT/WAT/DAT' page filter on AppDim
+* Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
 
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
+* Bug fixed: Timezone values are wrong (all positive)
+* Bug fixed: Error report, incoming ws calls - fixed 'all errors' visual when no data is present
+* Bug fixed: Performance report, incoming ws calls - fixed title length on status details by http status code, changed visual headers to use lower case
+* Dataset: Added platform version and major version to environment dimension
+* Errors: added global page filters on app, app publisher, app id, and app version
+* Errors: on page FeatureErrors, refactored model to use callstack dimension. Switched to using TenantHash for environment dim reference. Added top/bottom parsing visuals for the AL stack trace. 
+* Administration: on page Inventory, added platform version and major version to environment visual and page filters.
+
+
+------------------
+2023-08-06 release
+------------------
+* Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
+* Dataset: Introduced new dimensions for Urls and HTTP status codes, added apps from AL telemetry to AppDim 
+* Usage: On page 'Feature Usage', data can now be filtered with the global page filters on the top of the page
+* Errors: On all pages, added a nice banner in green if no errors are present.
+* Errors: On page 'Incoming web service call errors', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
+* Errors: On page 'Outgoing web service call errors', added filters on host and url, now using UrlDimension (so slightly faster data loading), changed 'errors by error type' visual to matrix
+* Errors: On page 'Feature Errors', data can now be filtered with filters from the AppDim dimension
+* Performance: On page 'Incoming web service call performance', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
+* Performance: On page 'Outgoing web service call performance', added filters on host and url, now using UrlDimension (so slightly faster data loading), added new visuals to show call (HTTP) status statistics and details. 
+
+
+------------------
+2023-07-06 release
+------------------
+* Performance: On page Long Running AL, added visual on new dimensions sqlExecutes and sqlRowsRead
+
+
+------------------
+2023-06-22 release
+------------------
+* Dataset: Tuned data load for ReportPerformance. Moved payload info (layout, report format/action, ..) into its own dimension. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Dataset: New "Tenant / Environment / Type" hierarchy on Environment dimension
 * Errors: On page IncomingWebserviceErrors, added two new visuals. First one shows the new OData error dimensions 'Failure Reason' and 'Diagnostic Message'. The second one shows the User Agent set by the caller.
+* Performance: On all pages, added overview section with AI visuals and top 10 avg. 
 * Performance: On page 'Long Running AL', use new dimension exclusiveTime (this dimension was introduced in 21.6/22.0)
 * Performance: On page 'Incoming Web Service performance', added calculations on queue time (introduced in telemetry in v22)
 
-TODO
-* Performance: (in 22.0/22.1) On page 'Database lock timeouts', added isolationLevel to SQL visual
 
 ------------------
 2023-05-03 release
