@@ -28,7 +28,7 @@ $response = Invoke-WebRequest `
 
 
 # Copy production environment to a sandbox environment
-$environmentName = "MyProd"
+$environmentName = "Production"
 $newEnvironmentName = "MyNewSandboxAsACopy"
 $response = Invoke-WebRequest `
     -Method Post `
@@ -42,7 +42,7 @@ $response = Invoke-WebRequest `
 
 
 # Rename an environment
-$currentEnvironmentName = "MyProd"
+$currentEnvironmentName = "Production"
 $newEnvironmentName = "MyNewProd"
 $response = Invoke-WebRequest `
     -Method Post `
@@ -55,7 +55,7 @@ $response = Invoke-WebRequest `
 
 
 # Restart an environment
-$environmentName = "MyProd"
+$environmentName = "Production"
 $response = Invoke-WebRequest `
     -Method Post `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/restart" `
@@ -64,7 +64,7 @@ $response = Invoke-WebRequest `
 
 
 # Set AppInsights key
-$environmentName = "MyProd"
+$environmentName = "Production"
 $newAppInsightsKey = "InstrumentationKey=11111111-2222-3333-4444-555555555555;IngestionEndpoint=https://northeurope-2.in.applicationinsights.azure.com/;LiveEndpoint=https://northeurope.livediagnostics.monitor.azure.com/"
 $response = Invoke-WebRequest `
     -Method Post `
@@ -78,7 +78,7 @@ Write-Host "Responded with: $($response.StatusCode) $($response.StatusDescriptio
 
 
 # Get support settings
-$environmentName = "MyProd"
+$environmentName = "Production"
 $response = Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/support/applications/businesscentral/environments/$environmentName/supportcontact" `
@@ -87,7 +87,7 @@ Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
 
 # Get storage (database and file) used by an environment in KB
-$environmentName = "MyProd"
+$environmentName = "Production"
 $response = Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/usedstorage" `
@@ -112,7 +112,7 @@ Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
 
 # Get operations for an environment
-$environmentName = "MyProd"
+$environmentName = "Production"
 $response = Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/environments/$environmentName/operations" `
@@ -129,7 +129,7 @@ Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
 
 # Get an operation for an environment
-$environmentName = "MyProd"
+$environmentName = "Production"
 $operationId = "00000000-1111-2222-3333-444444444444"
 $response = Invoke-WebRequest `
     -Method Get `

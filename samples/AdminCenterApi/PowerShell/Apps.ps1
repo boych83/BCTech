@@ -12,8 +12,9 @@ $response = Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/apps" `
     -Headers @{Authorization=("Bearer $accessToken")}
-Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
+Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content)) 
 
+(ConvertTo-Json(ConvertFrom-Json $response.Content)) | Select -ExpandProperty value
 
 # Get available updates
 $response= Invoke-WebRequest `
@@ -21,9 +22,6 @@ $response= Invoke-WebRequest `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/apps/availableUpdates" `
     -Headers @{Authorization=("Bearer $accessToken")}
 Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
-
-
-
 
 
 

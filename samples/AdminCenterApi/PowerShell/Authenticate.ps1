@@ -3,10 +3,10 @@
 
 
 # Parameters
-$aadAppId = "0999645b-84e4-4980-bd52-e3e6cccf15b3"    # partner's AAD app id
+$aadAppId = "c40d9a4c-8f00-4a28-aa5d-6a4d15ef161e"    # partner's AAD app id
 $aadAppRedirectUri = "http://localhost"               # partner's AAD app redirect URI
-$aadTenantId = "f5b6b245-5dd2-4bf5-94d4-35ef04d73c6d" # customer's tenant id
-
+$aadTenantId = "5f824385-5b14-483b-a1e3-d1ef07e79a25" # customer's tenant id
+#https://businesscentral.dynamics.com/5f824385-5b14-483b-a1e3-d1ef07e79a25/Production
 
 # Only needs to be done once: Install the MSAL PowerShell module (see https://github.com/AzureAD/MSAL.PS)
 #Install-Module MSAL.PS
