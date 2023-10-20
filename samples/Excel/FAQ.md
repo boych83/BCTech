@@ -18,7 +18,13 @@ Note that you can use all of these features on the report once it has been gener
 ## There must be blog posts on this from the community. Where are they?
 Sure. Here are some links to get you started:
 
-2022-11-18, _HOW DO I: CREATE AN EXCEL LAYOUT REPORT?_ by Steven Renders
+2023-09-18, _Business Central Excel Layouts_ by Microsoft MVP Josh Anglesea
+https://joshanglesea.wordpress.com/2023/09/18/business-central-excel-layouts/
+
+2023-07-28, _BC Excels at Reporting_ by Tonya Bricco-Meske
+https://bcdevnotebook.com/2023/07/28/bc-excels-at-reporting/
+
+2022-11-18, _HOW DO I: CREATE AN EXCEL LAYOUT REPORT?_ by Microsoft MVP Steven Renders
 https://thinkaboutit.be/2022/11/how-do-i-create-an-excel-layout-report/
 
 2022-08-24, _D365 Business Central : Using Excel Layout for Reporting_ by THATNAVGUY
@@ -39,6 +45,7 @@ Tip: Just use request page, Schedule, Excel Document (Data only)
 Quick tip: do it with an Excel layout if you want to remove columns you don’t need from the Data worksheet (Yes, you can do that)
 
 Advanced tip: Consider doing some data manipulation in Power Query. Just the things you always do
+If you use Power Query, Go to Data, Queries & Connections, right click and select Properties (of the Query). Check the box "Refresh data when opening the file". This will reload the data from the Data sheet.
 
 ## I want to to create a layout from scratch, but I don’t know what might be useful to show. Any tips?
 Try using Analyze Data and just add the insights to the layout.
