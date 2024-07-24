@@ -9,14 +9,14 @@ Below, you can see
 -------------
 Pending teams
 -------------
+* Database deadlocks page: need to fix URL (hide) for user telemetry id (unblocked in 23.1/23.2)
 * Usage: Add user telemetry id to pageview pages and allow filters on this (when available in client telemetry)
+Url (in v24)
+https://businesscentral.dynamics-tie.com/?page=774&filter='Telemetry User ID' IS '<telemetry ID>'
 * Usage: add role dimension to page views (when available in client telemetry)
 * Usage: log search terms (opt-in) (when available in client telemetry)
 * Usage: add license type on sessions page (pending bug fix from server team)
 * Administration: Permission set changes (pending app team on adding permission set name)
-* Administration: New page 'Change log configuration' changes (pending app team)
-* Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
-* Administration: New page on PTE validations signal (pending compiler team)
 
 
 -----
@@ -29,56 +29,9 @@ Ideas
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
-* update application areas with 22.0 new app features
-* Add header tooltips (where appropriate)
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
 * Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
-* Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
-* what are these events?
-AL0000E9U
-RT0042
-RT0047
-AL0000LA1
-AL0000EIO
-AL0000LA2
-AL0000LA3
-
-RT0040
-Business event subscription created
-
-RT0041
-Business event subscription deleted.
-
-RT0045
-Business event triggered successfully.
-
-
-------------------
-vNext (implemented, coming in the next release, probably available in the beta app)
-Install beta app from: https://aka.ms/bctelemetryreportbeta
-------------------
-* Bug fixed: On Job queue errors page, url now works (was missing a ?)
-* Bug fixed: App slicer now sync across all pages in each report (cannot sync across reports)
-* All pages: AAD renamed to Entra
-* Administration: on page 'Environment lifecycle', added events LC0156
-* Errors: on page Report Errors, added new visual on what the user did. Also fixed bug where report errors only showed cancelled reports, not exceptions.
-* Errors: on page outgoing web service errors, added HTTP details to HTTP status visual. Also added new HTTP filter possibilities.
-
-ACTIVE
-* Errors: on all pages, added links to documentation and troubleshooting guide
-Login errors
-Permission Errors
-Environment lifecycle errors
-Company lifecycle errors
-Email errors
-Authentication (web service key) errors
-Webservice metadata errors
-Connector errors
-Azure function errors
-Job Queue errors
-Task Scheduler errors
-Configuration package errors
-Database deadlocks
+* Business event telemetry
 
 
 Possible bugs
@@ -87,6 +40,55 @@ Seems like this issue has more pages, at least
 * Feature errors
 * Outgoing WS errors
 
+On Environment Inventory report: "Is Updated" and "Is Deleted" predicates needs to be updated.
+See example https://www.yammer.com/dynamicsnavdev/#/threads/show?threadId=2567423155871744
+
+
+------------------
+vNext (implemented, coming in the next release, probably available in the beta app)
+Install beta app from: https://aka.ms/bctelemetryreportbeta
+------------------
+* Bug fixed: 1d/7d count measures now work for incoming web service errors
+* Bug fixed: data load works also when a LOT of web service metadata errors are present
+
+
+------------------
+2024-02-07 release
+------------------
+* Bug fixed: missing Entra/AAD in global environment slicer
+
+
+------------------
+2024-02-04 release
+------------------
+* Dataset: Introduced ClientInfoDim and refactored queries ClientBrowserUsageQuery to use this
+
+
+------------------
+2023-12-01 release
+------------------
+* Bug fixed: refresh error if you had query usage in the UI and also other signal on those queries
+* Errors: new page 'Per-Tenant Extension upload validation diagnostics'. Shows all diagnostics for extensions that failed to be uploaded to Business Central from the Extensions Management page.
+* Administration: Retention policy changes page
+* Administration: New page on PTE upload validations signal. 
+
+
+------------------
+2023-11-01 release
+------------------
+* Bug fixed: On Job queue errors page, url now works (was missing a "?")
+* Bug fixed: App slicer now sync across all pages in each report (cannot sync across reports)
+* Bug fixed: MAU query timed out. New query is now partitioned to load data in 5 parallel streams.
+* All pages: AAD renamed to Entra
+* Usage: new page 'Queries'. Shows all usage of data analysis on queries.
+* Usage: on page Reports, it is now possible to filter on usage of the Financial reporting (aka account schedules) feature
+* Errors: new page 'Environment extension validation diagnostics'. Shows all diagnostics for extensions that needs to be fixed before upgrading to the next version of Business Central.
+* Errors: on page Report Errors, added new visual on what the user did. Also fixed bug where report errors only showed cancelled reports, not exceptions.
+* Errors: on page outgoing web service errors, added HTTP details to HTTP status visual. Also added new HTTP filter possibilities.
+* Errors: on all pages, added links to documentation and troubleshooting guide
+* Administration: new page 'Change log lifecycle'. Shows all lifecycle events (add/remove/change) for fields in the changelog feature.
+* Administration: on page 'Environment lifecycle', added events LC0156
+* Administration: New page on PTE validations signal. 
 
 
 ------------------
